@@ -502,11 +502,16 @@ def screen_results():
 def main():
     inject_css()
     scr = st.session_state.screen
-    if scr == "upload":    screen_upload()
-    elif scr == "configure": screen_configure()
-    elif scr == "loading":   screen_loading()
-    elif scr == "quiz":    screen_quiz()
-    elif scr == "results": screen_results()
+    # Use a single empty slot so switching screens clears all previous content
+    if "root" not in st.session_state:
+        st.session_state.root = st.empty()
+    root = st.session_state.root
+    with root.container():
+        if scr == "upload":      screen_upload()
+        elif scr == "configure": screen_configure()
+        elif scr == "loading":   screen_loading()
+        elif scr == "quiz":      screen_quiz()
+        elif scr == "results":   screen_results()
 
 if __name__ == "__main__":
     main()
