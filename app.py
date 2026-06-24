@@ -338,13 +338,14 @@ div[data-testid="quiz_options"] button[kind="primary"] {
                     st.session_state.screen = "results"; st.rerun()
 
     with c2:
-        # Timer
+        # Timer — counts down total quiz time
         if cfg.get("timed") and st.session_state.timer_start:
             elapsed = int(time.time() - st.session_state.timer_start)
-            tpq = cfg["time_per_question"]
-            rem = max(0, tpq - (elapsed % tpq))
-            frac = rem / tpq
-            urg = frac < 0.10
+            total_time = cfg["time_per_question"] * total
+            rem = max(0, total_time - elapsed)
+            frac = rem / total_time if total_time else 0
+            urg = rem < 30
+            mins, secs = divmod(rem, 60)
             R = 30; circ = 2 * math.pi * R; off = circ * (1 - frac)
             stk = "#B87070" if urg else "var(--ac)"
             st.markdown(f"""<div class="ac-inset" style="text-align:center;margin-bottom:14px">
@@ -356,11 +357,14 @@ div[data-testid="quiz_options"] button[kind="primary"] {
         cx="36" cy="36" r="{R}" stroke-dasharray="{circ:.1f}" stroke-dashoffset="{off:.1f}"
         style="transition:stroke-dashoffset .9s linear,stroke .3s ease"/>
     </svg>
-    <div class="ac-tn {'urg' if urg else ''}">{rem}</div>
+    <div class="ac-tn {'urg' if urg else ''}">{mins:02d}:{secs:02d}</div>
   </div>
-  <div style="font-family:var(--fd);font-size:9px;letter-spacing:.2em;color:var(--mfg)">SECONDS</div>
+  <div style="font-family:var(--fd);font-size:9px;letter-spacing:.2em;color:var(--mfg)">REMAINING</div>
 </div>""", unsafe_allow_html=True)
-            st.rerun()
+            if rem == 0:
+                st.session_state.screen = "results"; st.rerun()
+            else:
+                time.sleep(1); st.rerun()
 
         # Question nav grid
         answered = st.session_state.user_answers
@@ -397,18 +401,20 @@ def screen_loading():
     cfg = st.session_state.quiz_config
     num_q = cfg["num_questions"]
     fd = cfg["difficulty"]
+    # Render full-page placeholder immediately so configure screen is gone
+    st.markdown("""<style>section.main > div {padding-top:0!important}</style>""", unsafe_allow_html=True)
+    status = st.empty()
     msgs = [
         f"Consulting {ppt['slides']} folios…",
         "Analysing scholarly content…",
         f"Composing {num_q} questions…",
         "Inscribing elucidations…",
     ]
-    ph = st.empty()
     for m in msgs:
-        ph.markdown(f"""<div style="padding:80px 0;text-align:center">
+        status.markdown(f"""<div style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
   <div style="font-family:var(--fh);font-size:32px;font-weight:400;color:var(--fg);margin-bottom:8px">Composing your examination</div>
   <div style="font-family:var(--fb);font-size:15px;color:var(--mfg);margin-bottom:20px;font-style:italic">{m}</div>
-  <div class="ac-lbar" style="max-width:320px;margin:0 auto"><div class="ac-lbarf"></div></div>
+  <div class="ac-lbar" style="max-width:320px;width:100%"><div class="ac-lbarf"></div></div>
 </div>""", unsafe_allow_html=True)
         time.sleep(0.4)
     qs = generate_questions(ppt, num_q, fd)
