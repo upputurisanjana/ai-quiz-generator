@@ -22,17 +22,17 @@ def inject_css():
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:     #1C1714;
-  --bg-alt: #251E19;
-  --fg:     #E8DFD4;
-  --muted:  #3D332B;
-  --mfg:    #9C8B7A;
-  --bd:     #4A3F35;
-  --ac:     #C9A962;
+  --bg:     #F5F0E8;
+  --bg-alt: #EDE7DB;
+  --fg:     #2C2218;
+  --muted:  #D8CFC3;
+  --mfg:    #7A6A58;
+  --bd:     #C8BDB0;
+  --ac:     #8B6914;
   --ac2:    #8B2635;
-  --ac-fg:  #1C1714;
-  --brass-grad: linear-gradient(180deg,#D4B872 0%,#C9A962 50%,#B8953F 100%);
-  --engraved: 1px 1px 1px rgba(0,0,0,.4),-1px -1px 1px rgba(255,255,255,.1);
+  --ac-fg:  #FFFFFF;
+  --brass-grad: linear-gradient(180deg,#A07820 0%,#8B6914 50%,#7A5C10 100%);
+  --engraved: 1px 1px 1px rgba(0,0,0,.2),-1px -1px 1px rgba(255,255,255,.1);
   --fh: 'Cormorant Garamond',serif;
   --fb: 'Crimson Pro',serif;
   --fd: 'Cinzel',serif;
@@ -49,7 +49,7 @@ section[data-testid="stSidebar"] { display:none!important; }
 }
 .ac-vignette {
   position:fixed; inset:0; pointer-events:none; z-index:0;
-  background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(28,23,20,.5) 100%);
+  background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(61,48,40,.5) 100%);
 }
 .ac-overline { font-family:var(--fd); font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:.25em; color:var(--ac); }
 .ac-h1 { font-family:var(--fh); font-size:52px; font-weight:400; line-height:1.05; letter-spacing:-.01em; color:var(--fg); margin:8px 0 14px; }
@@ -63,10 +63,11 @@ section[data-testid="stSidebar"] { display:none!important; }
 .ac-card::after  { bottom:0; right:0; border-left:none; border-top:none; }
 .ac-card:hover::before, .ac-card:hover::after { opacity:1; }
 .ac-inset { background:var(--bg); border:1px solid var(--bd); border-radius:4px; padding:22px 24px; }
-div.stButton > button { background:var(--brass-grad)!important; color:var(--ac-fg)!important; border:none!important; border-radius:4px!important; font-family:var(--fd)!important; font-size:11px!important; font-weight:500!important; text-transform:uppercase!important; letter-spacing:.15em!important; padding:14px 28px!important; text-shadow:var(--engraved)!important; box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(0,0,0,.2),0 2px 8px rgba(0,0,0,.3)!important; transition:filter .15s ease,box-shadow .15s ease!important; }
-div.stButton > button:hover { filter:brightness(1.1)!important; box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(0,0,0,.2),0 4px 12px rgba(201,169,98,.3)!important; }
-div.stButton > button:active { box-shadow:inset 0 2px 4px rgba(0,0,0,.35)!important; }
-div.stButton > button:focus-visible { outline:none!important; box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--ac)!important; }
+div.stButton > button[kind="secondary"] { background:var(--bg-alt)!important; color:var(--fg)!important; border:1px solid var(--bd)!important; border-radius:4px!important; font-family:var(--fd)!important; font-size:11px!important; font-weight:500!important; text-transform:uppercase!important; letter-spacing:.15em!important; padding:12px 24px!important; box-shadow:none!important; transition:border-color .15s,color .15s!important; }
+div.stButton > button[kind="secondary"]:hover { border-color:var(--ac)!important; color:var(--ac)!important; }
+div.stButton > button[kind="primary"] { background:rgba(139,105,20,.1)!important; color:var(--ac)!important; border:2px solid var(--ac)!important; border-radius:4px!important; font-family:var(--fd)!important; font-size:11px!important; font-weight:500!important; text-transform:uppercase!important; letter-spacing:.15em!important; padding:12px 24px!important; box-shadow:none!important; }
+div.stButton > button[kind="primary"]:hover { background:rgba(139,105,20,.18)!important; }
+div.stButton > button:focus-visible { outline:none!important; box-shadow:0 0 0 2px var(--ac)!important; }
 div[data-testid="stSlider"] > div { padding:0!important; }
 div[data-testid="stSlider"] label { font-family:var(--fd)!important; font-size:10px!important; font-weight:500!important; text-transform:uppercase!important; letter-spacing:.2em!important; color:var(--mfg)!important; }
 div[data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] { background:var(--ac)!important; border-color:var(--ac)!important; }
@@ -101,7 +102,7 @@ div[data-testid="stExpander"] summary { font-family:var(--fh)!important; font-si
 .ac-arch { width:80px; height:80px; margin:0 auto 20px; border:1px solid var(--bd); border-radius:40% 40% 0 0 / 20% 20% 0 0; display:flex; align-items:center; justify-content:center; background:var(--bg); color:var(--ac); font-size:28px; transition:border-color .3s; }
 .ac-drop:hover .ac-arch { border-color:rgba(201,169,98,.6); }
 .ac-lbar { width:100%; height:2px; background:var(--muted); border-radius:99px; overflow:hidden; }
-.ac-lbarf { height:100%; background:var(--brass-grad); border-radius:99px; animation:lsc 1.6s ease-in-out infinite; }
+.ac-lbarf { height:100%; background:var(--ac); border-radius:99px; animation:lsc 1.6s ease-in-out infinite; }
 div[data-testid^="qngrid_"] button { background:var(--bg-alt)!important; color:var(--mfg)!important; border:1px solid var(--bd)!important; border-radius:4px!important; padding:0!important; min-height:34px!important; font-family:var(--fd)!important; font-size:10px!important; font-weight:500!important; }
 div[data-testid^="qngrid_"] button:hover { border-color:var(--ac)!important; color:var(--ac)!important; }
 div[data-testid^="opt_btn_"] { position:relative!important; margin-bottom:8px!important; }
@@ -136,10 +137,13 @@ def generate_questions(ppt, n, diff):
 Return ONLY a JSON array:
 [{{"id":"q1","question_text":"...","options":{{"A":"...","B":"...","C":"...","D":"..."}},"correct_answer":"A","source_slide":1,"explanation_correct":"...","explanation_wrong":{{"B":"...","C":"...","D":"..."}}}}]
 Content:\n{txt}"""
-    r = client.chat.completions.create(model="deepseek/deepseek-r1", max_tokens=4096,
+    r = client.chat.completions.create(model="deepseek/deepseek-chat", max_tokens=min(4096, 300 * n),
         messages=[{"role":"user","content":prompt}])
-    c = r.choices[0].message.content
-    return json.loads(c[c.find("["):c.rfind("]")+1])
+    c = r.choices[0].message.content or ""
+    start, end = c.find("["), c.rfind("]")
+    if start == -1 or end == -1:
+        st.error(f"Model returned invalid response. Raw output:\n\n{c[:500]}"); st.stop()
+    return json.loads(c[start:end+1])
 
 def screen_upload():
     ppt = st.session_state.ppt_data
@@ -228,41 +232,21 @@ def screen_configure():
         dc = st.columns(3)
         for i, d in enumerate(["Simple", "Medium", "Complex"]):
             with dc[i]:
-                with st.container(key=f"cfg_diff_{d}"):
-                    if st.button(d, key=f"d_{d}", use_container_width=True):
-                        st.session_state.quiz_config["difficulty"] = d; st.rerun()
-                if d == diff:
-                    st.markdown(f"""<style>
-div[data-testid="cfg_diff_{d}"] button{{
-  background:var(--bg-alt)!important;
-  border:2px solid var(--ac)!important;
-  color:var(--ac)!important;
-  box-shadow:0 0 0 0!important;
-  filter:none!important;
-}}
-</style>""", unsafe_allow_html=True)
+                if st.button(d, key=f"d_{d}", use_container_width=True,
+                             type="primary" if d == diff else "secondary"):
+                    st.session_state.quiz_config["difficulty"] = d; st.rerun()
 
         # ── Mode ──
         st.markdown('<div class="ac-overline" style="margin-top:24px;margin-bottom:12px">Examination Mode</div>', unsafe_allow_html=True)
         tc = st.columns(2)
-        for mode_label, mode_val, key in [("⏱  Timed", True, "cfg_mode_timed"), ("∞  Untimed", False, "cfg_mode_untimed")]:
-            with tc[0 if mode_val else 1]:
-                with st.container(key=key):
-                    if st.button(mode_label, key=f"m_{key}", use_container_width=True):
-                        st.session_state.quiz_config["timed"] = mode_val; st.rerun()
-                if is_timed == mode_val:
-                    st.markdown(f"""<style>
-div[data-testid="{key}"] button{{
-  background:var(--bg-alt)!important;
-  border:2px solid var(--ac)!important;
-  color:var(--ac)!important;
-  box-shadow:0 0 0 0!important;
-  filter:none!important;
-}}
-</style>""", unsafe_allow_html=True)
+        for mode_label, mode_val, col in [("⏱  Timed", True, tc[0]), ("∞  Untimed", False, tc[1])]:
+            with col:
+                if st.button(mode_label, key=f"m_{mode_val}", use_container_width=True,
+                             type="primary" if is_timed == mode_val else "secondary"):
+                    st.session_state.quiz_config["timed"] = mode_val; st.rerun()
 
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("Compose the Examination →", use_container_width=True):
+        if st.button("Compose the Examination →", use_container_width=True, type="primary"):
             fd = cfg.get("difficulty", "Medium")
             ft = cfg.get("timed", False)
             st.session_state.quiz_config.update({
@@ -273,25 +257,7 @@ div[data-testid="{key}"] button{{
             st.session_state.user_answers = {}
             st.session_state.confirmed_answers = {}
             st.session_state.timer_start = time.time() if ft else None
-
-            ph = st.empty()
-            msgs = [
-                f"Consulting {ppt['slides']} folios…",
-                "Analysing scholarly content…",
-                f"Composing question I of {num_q}…",
-                f"Composing question {num_q//2} of {num_q}…",
-                "Inscribing elucidations…",
-            ]
-            for m in msgs:
-                ph.markdown(f"""<div style="padding:28px 0">
-  <div style="font-family:var(--fb);font-size:15px;color:var(--mfg);margin-bottom:12px;font-style:italic">{m}</div>
-  <div class="ac-lbar"><div class="ac-lbarf"></div></div>
-</div>""", unsafe_allow_html=True)
-                time.sleep(0.4)
-            qs = generate_questions(ppt, num_q, fd)
-            st.session_state.questions = qs
-            ph.empty()
-            st.session_state.screen = "quiz"; st.rerun()
+            st.session_state.screen = "loading"; st.rerun()
 
     with c2:
         fd = cfg.get("difficulty", "Medium")
@@ -322,9 +288,20 @@ def screen_quiz():
     sel = st.session_state.user_answers.get(q["id"])
     pct = (qi + 1) / total * 100
 
-    # Overlay trick for invisible clickable buttons on styled option divs
+    # Scope option button styles to the options container only
     st.markdown("""<style>
-div[data-testid^="opt_btn_"] .qz-opt { margin-bottom:0!important; }
+div[data-testid="quiz_options"] button[kind="secondary"] {
+    font-size: 16px !important; text-transform: none !important;
+    letter-spacing: 0 !important; text-align: left !important;
+    justify-content: flex-start !important; min-height: 52px !important;
+    height: auto !important; padding: 14px 18px !important;
+}
+div[data-testid="quiz_options"] button[kind="primary"] {
+    font-size: 16px !important; text-transform: none !important;
+    letter-spacing: 0 !important; text-align: left !important;
+    justify-content: flex-start !important; min-height: 52px !important;
+    height: auto !important; padding: 14px 18px !important;
+}
 </style>""", unsafe_allow_html=True)
 
     # Progress bar + counter
@@ -335,18 +312,16 @@ div[data-testid^="opt_btn_"] .qz-opt { margin-bottom:0!important; }
 
     c1, c2 = st.columns([2, 1], gap="large")
     with c1:
-        # Question card
         st.markdown(f"""<div class="ac-card" style="margin-bottom:18px">
   <div class="ac-overline" style="margin-bottom:10px">Question {qi+1}</div>
   <div style="font-family:var(--fh);font-size:24px;font-weight:400;line-height:1.3;color:var(--fg)">{q['question_text']}</div>
 </div>""", unsafe_allow_html=True)
 
-        # Answer options
-        for k, txt in q["options"].items():
-            cls = "sel" if k == sel else ""
-            with st.container(key=f"opt_btn_{qi}_{k}"):
-                st.markdown(f'<div class="ac-opt {cls}"><span class="ac-key">{k}</span>{txt}</div>', unsafe_allow_html=True)
-                if st.button(f"{k}. {txt}", key=f"o_{qi}_{k}", use_container_width=True):
+        with st.container(key="quiz_options"):
+            for k, txt in q["options"].items():
+                is_sel = k == sel
+                if st.button(f"{k}   {txt}", key=f"o_{qi}_{k}", use_container_width=True,
+                             type="primary" if is_sel else "secondary"):
                     st.session_state.user_answers[q["id"]] = k; st.rerun()
 
         st.markdown("<br>", unsafe_allow_html=True)
@@ -416,6 +391,29 @@ div[data-testid^="opt_btn_"] .qz-opt { margin-bottom:0!important; }
   <div class="ac-overline" style="margin-bottom:8px">Source</div>
   <div style="font-family:var(--fh);font-size:28px;color:var(--fg)">Folio <span style="color:var(--ac)">{src:02d}</span></div>
 </div>""", unsafe_allow_html=True)
+
+def screen_loading():
+    ppt = st.session_state.ppt_data
+    cfg = st.session_state.quiz_config
+    num_q = cfg["num_questions"]
+    fd = cfg["difficulty"]
+    msgs = [
+        f"Consulting {ppt['slides']} folios…",
+        "Analysing scholarly content…",
+        f"Composing {num_q} questions…",
+        "Inscribing elucidations…",
+    ]
+    ph = st.empty()
+    for m in msgs:
+        ph.markdown(f"""<div style="padding:80px 0;text-align:center">
+  <div style="font-family:var(--fh);font-size:32px;font-weight:400;color:var(--fg);margin-bottom:8px">Composing your examination</div>
+  <div style="font-family:var(--fb);font-size:15px;color:var(--mfg);margin-bottom:20px;font-style:italic">{m}</div>
+  <div class="ac-lbar" style="max-width:320px;margin:0 auto"><div class="ac-lbarf"></div></div>
+</div>""", unsafe_allow_html=True)
+        time.sleep(0.4)
+    qs = generate_questions(ppt, num_q, fd)
+    st.session_state.questions = qs
+    st.session_state.screen = "quiz"; st.rerun()
 
 def screen_results():
     qs = st.session_state.questions
@@ -517,6 +515,7 @@ def main():
     scr = st.session_state.screen
     if scr == "upload":    screen_upload()
     elif scr == "configure": screen_configure()
+    elif scr == "loading":   screen_loading()
     elif scr == "quiz":    screen_quiz()
     elif scr == "results": screen_results()
 
