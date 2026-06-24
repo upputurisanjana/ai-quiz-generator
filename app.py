@@ -68,7 +68,8 @@ div.stButton > button[kind="secondary"]:hover { border-color:var(--ac)!important
 div.stButton > button[kind="primary"] { background:rgba(139,105,20,.1)!important; color:var(--ac)!important; border:2px solid var(--ac)!important; border-radius:4px!important; font-family:var(--fd)!important; font-size:11px!important; font-weight:500!important; text-transform:uppercase!important; letter-spacing:.15em!important; padding:12px 24px!important; box-shadow:none!important; }
 div.stButton > button[kind="primary"]:hover { background:rgba(139,105,20,.18)!important; }
 div.stButton > button:focus-visible { outline:none!important; box-shadow:0 0 0 2px var(--ac)!important; }
-div[data-testid="stSlider"] > div { padding:0!important; }
+div[data-testid="quiz_options"] button[kind="secondary"],
+div[data-testid="quiz_options"] button[kind="primary"] { font-size:16px!important; text-transform:none!important; letter-spacing:0!important; text-align:left!important; justify-content:flex-start!important; min-height:52px!important; height:auto!important; padding:14px 18px!important; }
 div[data-testid="stSlider"] label { font-family:var(--fd)!important; font-size:10px!important; font-weight:500!important; text-transform:uppercase!important; letter-spacing:.2em!important; color:var(--mfg)!important; }
 div[data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] { background:var(--ac)!important; border-color:var(--ac)!important; }
 div[data-testid="stSlider"] [data-baseweb="slider"] [data-testid="stThumbValue"] { font-family:var(--fd)!important; color:var(--ac)!important; font-size:11px!important; }
@@ -288,22 +289,6 @@ def screen_quiz():
     sel = st.session_state.user_answers.get(q["id"])
     pct = (qi + 1) / total * 100
 
-    # Scope option button styles to the options container only
-    st.markdown("""<style>
-div[data-testid="quiz_options"] button[kind="secondary"] {
-    font-size: 16px !important; text-transform: none !important;
-    letter-spacing: 0 !important; text-align: left !important;
-    justify-content: flex-start !important; min-height: 52px !important;
-    height: auto !important; padding: 14px 18px !important;
-}
-div[data-testid="quiz_options"] button[kind="primary"] {
-    font-size: 16px !important; text-transform: none !important;
-    letter-spacing: 0 !important; text-align: left !important;
-    justify-content: flex-start !important; min-height: 52px !important;
-    height: auto !important; padding: 14px 18px !important;
-}
-</style>""", unsafe_allow_html=True)
-
     # Progress bar + counter
     st.markdown(f"""<div style="display:flex;align-items:center;gap:16px;margin-bottom:28px">
   <div class="ac-prog" style="flex:1"><div class="ac-progf" style="width:{pct}%"></div></div>
@@ -380,12 +365,10 @@ div[data-testid="quiz_options"] button[kind="primary"] {
                         is_cur = i == qi
                         is_ans = qs[i]["id"] in answered
                         with st.container(key=f"qngrid_{i}"):
-                            if st.button(str(i + 1), key=f"qn_{i}", use_container_width=True):
+                            btn_type = "primary" if is_cur else "secondary"
+                            label = f"◆{i+1}" if is_ans and not is_cur else str(i + 1)
+                            if st.button(label, key=f"qn_{i}", use_container_width=True, type=btn_type):
                                 st.session_state.current_question = i; st.rerun()
-                        if is_cur:
-                            st.markdown(f'<style>div[data-testid="qngrid_{i}"] button{{background:var(--brass-grad)!important;color:var(--ac-fg)!important;border:none!important;}}</style>', unsafe_allow_html=True)
-                        elif is_ans:
-                            st.markdown(f'<style>div[data-testid="qngrid_{i}"] button{{background:rgba(201,169,98,.12)!important;color:var(--ac)!important;border-color:rgba(201,169,98,.4)!important;}}</style>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
         # Source slide
