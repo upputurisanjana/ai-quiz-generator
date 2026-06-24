@@ -72,6 +72,8 @@ div[data-testid="quiz_options"] button[kind="secondary"],
 div[data-testid="quiz_options"] button[kind="primary"] { font-size:16px!important; text-transform:none!important; letter-spacing:0!important; text-align:left!important; justify-content:flex-start!important; min-height:52px!important; height:auto!important; padding:14px 18px!important; }
 div[data-testid="stSlider"] label { font-family:var(--fd)!important; font-size:10px!important; font-weight:500!important; text-transform:uppercase!important; letter-spacing:.2em!important; color:var(--mfg)!important; }
 div[data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] { background:var(--ac)!important; border-color:var(--ac)!important; }
+div[data-testid="stSlider"] [data-baseweb="slider"] [data-testid="stSliderTrack"] > div:first-child { background:var(--muted)!important; }
+div[data-testid="stSlider"] [data-baseweb="slider"] [data-testid="stSliderTrack"] > div:nth-child(2) { background:var(--ac)!important; }
 div[data-testid="stSlider"] [data-baseweb="slider"] [data-testid="stThumbValue"] { font-family:var(--fd)!important; color:var(--ac)!important; font-size:11px!important; }
 div[data-testid="stExpander"] { background:var(--bg-alt)!important; border:1px solid var(--bd)!important; border-radius:4px!important; margin-bottom:6px!important; }
 div[data-testid="stExpander"] summary { font-family:var(--fh)!important; font-size:16px!important; color:var(--fg)!important; padding:14px 18px!important; }
