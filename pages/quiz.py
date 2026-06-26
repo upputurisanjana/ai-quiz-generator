@@ -49,6 +49,34 @@ with c1:
                 st.switch_page("pages/results.py")
 
 with c2:
+    # Question nav grid — always visible
+    answered = st.session_state.user_answers
+    st.markdown('<div class="ac-inset"><div class="ac-overline" style="margin-bottom:12px">Questions</div></div>', unsafe_allow_html=True)
+    st.markdown("<div style='margin-top:8px'></div>", unsafe_allow_html=True)
+    cols_per_row = 5
+    for row_start in range(0, total, cols_per_row):
+        row_qs = list(range(row_start, min(row_start + cols_per_row, total)))
+        row_cols = st.columns(cols_per_row)
+        for col_i in range(cols_per_row):
+            with row_cols[col_i]:
+                if col_i < len(row_qs):
+                    i = row_qs[col_i]
+                    is_cur = i == qi
+                    is_ans = qs[i]["id"] in answered
+                    with st.container(key=f"qngrid_{i}"):
+                        label = f"◆{i+1}" if is_ans and not is_cur else str(i + 1)
+                        if st.button(label, key=f"qn_{i}", use_container_width=True,
+                                     type="primary" if is_cur else "secondary"):
+                            st.session_state.current_question = i; st.rerun()
+
+    src = q.get("source_slide")
+    if src:
+        st.markdown(f"""<div class="ac-inset" style="margin-top:12px">
+  <div class="ac-overline" style="margin-bottom:8px">Source</div>
+  <div style="font-family:var(--fh);font-size:28px;color:var(--fg)">Folio <span style="color:var(--ac)">{src:02d}</span></div>
+</div>""", unsafe_allow_html=True)
+
+    # Timer — always rendered last so rerun doesn't skip above content
     if cfg.get("timed") and st.session_state.timer_start:
         elapsed = int(time.time() - st.session_state.timer_start)
         total_time = cfg["time_per_question"] * total
@@ -58,7 +86,7 @@ with c2:
         mins, secs = divmod(rem, 60)
         R = 30; circ = 2 * math.pi * R; off = circ * (1 - frac)
         stk = "#B87070" if urg else "var(--ac)"
-        st.markdown(f"""<div class="ac-inset" style="text-align:center;margin-bottom:14px">
+        st.markdown(f"""<div class="ac-inset" style="text-align:center;margin-top:12px">
   <div class="ac-overline" style="text-align:center;margin-bottom:12px">Time Remaining</div>
   <div class="ac-tw">
     <svg style="transform:rotate(-90deg)" width="72" height="72" viewBox="0 0 72 72">
@@ -75,29 +103,3 @@ with c2:
             st.switch_page("pages/results.py")
         else:
             time.sleep(1); st.rerun()
-
-    answered = st.session_state.user_answers
-    st.markdown('<div class="ac-inset"><div class="ac-overline" style="margin-bottom:12px">Questions</div>', unsafe_allow_html=True)
-    cols_per_row = 5
-    for row_start in range(0, total, cols_per_row):
-        row_qs = list(range(row_start, min(row_start + cols_per_row, total)))
-        row_cols = st.columns(cols_per_row)
-        for col_i in range(cols_per_row):
-            with row_cols[col_i]:
-                if col_i < len(row_qs):
-                    i = row_qs[col_i]
-                    is_cur = i == qi
-                    is_ans = qs[i]["id"] in answered
-                    with st.container(key=f"qngrid_{i}"):
-                        label = f"◆{i+1}" if is_ans and not is_cur else str(i + 1)
-                        if st.button(label, key=f"qn_{i}", use_container_width=True,
-                                     type="primary" if is_cur else "secondary"):
-                            st.session_state.current_question = i; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    src = q.get("source_slide")
-    if src:
-        st.markdown(f"""<div class="ac-inset" style="margin-top:12px">
-  <div class="ac-overline" style="margin-bottom:8px">Source</div>
-  <div style="font-family:var(--fh);font-size:28px;color:var(--fg)">Folio <span style="color:var(--ac)">{src:02d}</span></div>
-</div>""", unsafe_allow_html=True)
