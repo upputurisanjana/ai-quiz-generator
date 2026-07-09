@@ -1,4 +1,4 @@
-# AI-Powered Quiz Generator — Specification
+cd# AI-Powered Quiz Generator — Specification
 
 **Course:** AI Application Development — Academic Year 2025–26
 **Type:** Student Homework Build
